@@ -55,10 +55,10 @@ def register_add():
         if (len(lista)!=0):
             flash('Complete todos los datos')
         else:
-            cur = mysql.connection.cursor()
+            cur = mysql.cursor()
             cur.execute('INSERT INTO usuario (usuario, nombre, apellido, mail, contra) VALUES (%s, %s, %s, %s, %s)',
             (datos[0], datos[1], datos[2], datos[3], datos[4]))
-            mysql.connection.commit()
+            mysql.commit()
             flash('Registrado correctamente')
     return redirect(url_for('Register'))
 
