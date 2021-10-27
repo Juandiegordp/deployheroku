@@ -5,6 +5,7 @@ import flask
 from flask.globals import request
 from flask.wrappers import Request
 from flask_mysqldb import MySQL
+import psycopg2
 
 app = Flask(__name__)
 
