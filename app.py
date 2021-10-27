@@ -22,7 +22,7 @@ app.secret_key = 'mysecretkey'
 
 @app.route('/')
 def Index():
-    return render_template('templates/Index.html')
+    return render_template('templates/index.html')
 
 @app.route('/prueba')
 def prueba():
