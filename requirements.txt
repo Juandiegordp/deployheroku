@@ -18,3 +18,4 @@ MarkupSafe==2.0.0
 mistune==0.8.4
 mysql==0.0.3
 mysqlclient==2.0.3
+requests==2.25.1
