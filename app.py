@@ -19,7 +19,7 @@ app = Flask(__name__)
 #mysql=MySQL(app)
 
 #postgres sql connection
-mysql = psycopg2.connect(host="ec2-3-221-100-217.compute-1.amazonaws.com", database="da7t12d2030eu3", port = 5432, user="zrsirfmyuqtoov", password="93fb8780150b7132c4d8ca2bd2be418e40d126941b3e91f1750de2445e02a754")
+mysql = psycopg2.connect(host="ec2-52-71-241-37.compute-1.amazonaws.com", database="dcj0rf3mfc52f1", port = 5432, user="hgycaxxgbohnkw", password="e1d06c93e07b70efbe6dd02f933c7702c2c0dbd38b095f61aebbce89cbd7011e")
 
 # settings session
 
