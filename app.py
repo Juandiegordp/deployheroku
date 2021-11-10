@@ -65,7 +65,7 @@ def Register():
             flash('Complete todos los datos')
         else:
             
-            cur = mysql.connection.cursor()
+            cur = mysql.cursor()
             cur.execute('SELECT usuario,mail FROM usuario WHERE usuario="{0}"'.format(datos[0]))
             coincidenciasUsuario= cur.fetchall()
             cur.execute('SELECT usuario,mail FROM usuario WHERE mail="{0}"'.format(datos[3]))
