@@ -31,7 +31,7 @@ def Index():
     if 'username' in session:
         return redirect(url_for('home'))
     else:
-        return render_template('index.html')
+        return render_template('Index.html')
 
 @app.route('/prueba')
 def prueba():
