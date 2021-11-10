@@ -109,3 +109,6 @@ Werkzeug==0.16.1
 widgetsnbextension==3.5.1
 WTForms==3.0.0
 uwsgi
+nbclassic==0.2.8
+nbconvert==6.0.7
+nbformat==5.1.3
