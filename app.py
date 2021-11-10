@@ -28,7 +28,10 @@ app.secret_key = 'mysecretkey'
 
 @app.route('/')
 def Index():
-    return render_template('index.html')
+    if 'username' in session:
+        return redirect(url_for('home'))
+    else:
+        return render_template('index.html')
 
 @app.route('/prueba')
 def prueba():
