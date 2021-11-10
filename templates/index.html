@@ -3,7 +3,6 @@
   <head>
     <title> Aplicacion </title>
 
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{ url_for('static', filename= 'css/style_index.css')}}" rel="stylesheet">
@@ -13,23 +12,33 @@
     <form action="/home" method="POST">
       <div class="wrapper fadeInDown">
         <div id="formContent">
-          <!-- Tabs Titles -->
-      
-          <!-- Icon -->
+          {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages%}
+              {%if success %}
+              <div class="alert alert-success" role="alert">
+                {{message}}
+              </div>
+              {% else %}
+                <div class="alert alert-danger" role="alert">
+                  {{message}}
+                </div>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+          {% endwith %} 
           <div class="fadeIn first">
             <img src="{{ url_for('static', filename= 'img/logo.png')}}" alt="User Icon" width="100" height="100" class="" id="" />
           </div>
       
-          <!-- Login Form -->
-          <form>
-            <input type="text" id="id-user" class="fadeIn second" name="usuario" placeholder="Usuario">
-            <input type="password" id="id-password" class="fadeIn third" name="contrasenia" placeholder="Contraseña">
-            <input type="submit" class="button" value="Iniciar Sesion" >
+          <form action="/home" method="POST">
+            <input type="text" id="id-user" class="fadeIn second" name="usuario" placeholder="Usuario" required>
+            <input type="password" id="id-password" class="fadeIn third" name="contrasenia" placeholder="Contraseña" required>
+            <button type="submit" class="btn btn-primary btn-lg mb-2 mt-2" value="Iniciar Sesion">Iniciar Sesion</button>
           </form>
       
-          <!-- Remind Passowrd ¿-->
           <div id="formFooter">
-            <a class="underlineHover" href="register">No esta registrado?</a>
+            <a class="" href="register">No esta registrado?</a>
           </div>
       
         </div>

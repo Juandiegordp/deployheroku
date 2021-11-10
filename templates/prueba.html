@@ -19,30 +19,96 @@
     <title>JS Bin</title>
   </head>
   <body>
-    <table id="TableA">
-      <tr>
-      <td>Antigua fila superior</td>
-      </tr>
-      </table>
-      <script type="text/javascript">
-      
-      function addRow(tableID) {
-        // Obtiene una referencia a la tabla
-        var tableRef = document.getElementById(tableID);
-      
-        // Inserta una fila en la tabla, en el índice 0
-        var newRow   = tableRef.insertRow(0);
-      
-        // Inserta una celda en la fila, en el índice 0
-        var newCell  = newRow.insertCell(0);
-      
-        // Añade un nodo de texto a la celda
-        var newText  = document.createTextNode('Nueva fila superior');
-        newCell.appendChild(newText);
-      }
-      
-      // Llama a addRow() con el ID de la tabla
-      addRow('TableA');
+    
+    <div>
+      <div class="container" style="margin-top: 20px;">
+        <div class="row" style="margin-bottom: 20px;">
+          <div class="dropdown col-1">
+            <button class="btn btn-info dropdown-toggle" data-toggle="dropdown" type="button" id="dropdownRutina" aria-haspopup="true" aria-expanded="false">
+              Rutina
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownRutina">
+              {% if datosRutinas %}
+                {% for rut in datosRutinas %}
+                  <a class="dropdown-item">{{rut.1}}</a>
+                {% endfor %}
+              {% else %}
+                <a class="dropdown-item">No tiene rutinas</a>
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-md-auto">
+
+          </div>  
+        </div>
+        <div class="text-center" hidden>
+          <h2>Rutina</h2>
+        </div>
+        <div class="form-group">
+          <div class="row text-center">
+            <label>ejercicio</label>
+          </div>
+          <div class="row text-center">
+            <label>informacion ejercicio</label>
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-3 text-center">
+              <h5 >Peso</h5>
+              <input type="text" class="form-control" style="margin-bottom: 10px;">
+              <input type="text" class="form-control" style="margin-bottom: 20px;">
+              <input type="text" class="form-control" style="margin-bottom: 20px;">
+            </div>
+            <div class="col-3 text-center">
+              <h5 >Repeticiones</h5>
+              <input type="text" class="form-control" style="margin-bottom: 20px;">
+              <input type="text" class="form-control" style="margin-bottom: 20px;">
+              <input type="text" class="form-control" style="margin-bottom: 20px;">
+            </div>
+            <div class="col-3 text-center">
+              <h5 >Descansos</h5>
+              <input type="text" class="form-control" style="margin-bottom: 20px;">
+              <input type="text" class="form-control" style="margin-bottom: 20px;">
+              <input type="text" class="form-control" style="margin-bottom: 20px;">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row text-center">
+            <label>ejercicio</label>
+          </div>
+          <div class="row text-center">
+            <label>informacion ejercicio</label>
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-3 text-center">
+              <h5 >Peso</h5>
+              <input type="text" class="form-control" style="margin-bottom: 20px;">
+              <input type="text" class="form-control" style="margin-bottom: 20px;">
+              <input type="text" class="form-control" style="margin-bottom: 20px;"> 
+            </div>
+            <div class="col-3 text-center">
+              <h5>Repeticiones</h5>
+              <input type="text" class="form-control" style="margin-bottom: 20px;">
+              <input type="text" class="form-control" style="margin-bottom: 20px;">
+              <input type="text" class="form-control" style="margin-bottom: 20px;">
+            </div>
+            <div class="col-3 text-center">
+              <h5 >Descansos</h5>
+              <input type="text" class="form-control" style="margin-bottom: 20px;">
+              <input type="text" class="form-control" style="margin-bottom: 20px;">
+              <input type="text" class="form-control" style="margin-bottom: 20px;">
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="container" style="margin-top: 20px;">
+        <div class="d-grid gap-2">
+          <button type="button" class="btn btn-primary btn-lg btn-block" disabled>Terminar Rutina</button>
+        </div>
+      </div>
+    </div>
       
       </script>
   </body>
