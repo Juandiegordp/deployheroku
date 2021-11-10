@@ -1,4 +1,5 @@
 import numpy as np
+import math
 
 def IMC(peso, estatura):
     return peso/(estatura*estatura)
@@ -24,4 +25,4 @@ def porcentajeGrasa(sexo, cintura, cuello, altura, caderas):
         PG=495/((1.29579-0.35004*(np.log10(cintura+caderas-cuello))+0.22100*(np.log10(altura)))-450)
     else:
         PG=495/(1.0324-0.19077*(np.log10(cintura-cuello))+0.15456*(np.log10(altura)))-450
-    return PG
+    return round(PG)
