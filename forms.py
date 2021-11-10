@@ -1,4 +1,4 @@
-from wtforms import Form, validators, PasswordField, BooleanField, FloatField, IntegerField, RadioField, DateField, StringField, TextField
+from wtforms import Form, validators, PasswordField, BooleanField, FloatField, IntegerField, RadioField, DateField, StringField
 from wtforms.fields.html5 import EmailField
 
 class RegisterForm(Form):
