@@ -6,16 +6,21 @@ from flask.globals import request
 from flask.wrappers import Request
 from flask_mysqldb import MySQL
 import forms, functions
+import psycopg2
 
 app = Flask(__name__)
 
 #Mysql connection
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'root'
-app.config['MYSQL_PORT'] = 3300
-app.config['MYSQL_DB'] = 'aplicaciongym'
-mysql=MySQL(app)
+#app.config['MYSQL_HOST'] = 'ec2-3-221-100-217.compute-1.amazonaws.com'
+#app.config['MYSQL_USER'] = 'zrsirfmyuqtoov'
+#app.config['MYSQL_PASSWORD'] = '93fb8780150b7132c4d8ca2bd2be418e40d126941b3e91f1750de2445e02a754'
+#app.config['MYSQL_PORT'] = 5432
+#app.config['MYSQL_DB'] = 'da7t12d2030eu3'
+#mysql=MySQL(app)
+
+#postgres sql connection
+mysql = psycopg2.connect(host="ec2-52-71-241-37.compute-1.amazonaws.com", database="dcj0rf3mfc52f1", port = 5432, user="hgycaxxgbohnkw", password="e1d06c93e07b70efbe6dd02f933c7702c2c0dbd38b095f61aebbce89cbd7011e")
+
 
 # settings session
 
@@ -69,7 +74,7 @@ def Register():
             if (len(coincidenciasMail)==0 and len(coincidenciasUsuario)==0):
                 cur.execute('INSERT INTO usuario (usuario, nombre, apellido, mail, contra, sexo, fecha_nacimiento, altura, peso, cintura, cuello, caderas) VALUES ("{0}", "{1}", "{2}", "{3}", "{4}", "{5}", "{6}", {7}, {8}, {9}, {10}, {11})'.format
                 (datos[0], datos[1], datos[2], datos[3], datos[4], datos[5], datos[6], datos[7], datos[8], datos[9], datos[10], datos[11]))
-                mysql.connection.commit()
+                mysql.commit()
                 flash('Registrado correctamente')
                 return redirect(url_for('Index', success=True))
             else:
@@ -92,7 +97,7 @@ def home():
         if request.form['boton']=="Iniciar Sesion":
             usuario= request.form['usuario']
             contrasenia= request.form['contrasenia']
-            cur= mysql.connection.cursor()
+            cur= mysql.cursor()
             cur.execute('SELECT u.id_usuario FROM usuario u WHERE (u.usuario= %s or u.mail=%s) AND u.contra=%s', (usuario, usuario, contrasenia))
             datosUsuario= cur.fetchall()
             if (len(datosUsuario)!=0):
@@ -106,23 +111,23 @@ def home():
             pesos=request.form.getlist('pesos')
             repeticiones=request.form.getlist('repeticiones')
             descansos=request.form.getlist('descansos')
-            cur= mysql.connection.cursor()
+            cur= mysql.cursor()
             cur.execute('SELECT id_rutina FROM rutina WHERE nombre="{0}"'.format(rutina))
             idrutina=cur.fetchall()
             print(idrutina)
             i=0
             for ej in ejercicio:
                 for j in range(0, len(pesos)):
-                    cur= mysql.connection.cursor()
+                    cur= mysql.cursor()
                     cur.execute('INSERT into historial_rutina(id_rutina, id_ejerc, fecha_realizacion, peso, repeticiones, descanso) VALUES (%s, %s , CURDATE(), %s, %s, %s)', [idrutina, ej, pesos[j], repeticiones[j], descansos[j]])
                 i=i+1
-            mysql.connection.commit()
+            mysql.commit()
             flash("Termino la rutina")
             return redirect(url_for('home'))
 
     if 'username' in session and request.method== 'GET':
         id=session['username']
-        cur= mysql.connection.cursor()
+        cur= mysql.cursor()
         cur.execute('SELECT r.id_rutina, e.id_ejercicio, e.nombre, re.peso, re.repeticiones, re.series, re.descanso FROM usuario_rutina ur JOIN rutina r ON r.id_rutina=ur.id_rutina JOIN rutina_ejercicio re ON r.id_rutina=re.id_rutina JOIN ejercicio e ON e.id_ejercicio=re.id_ejercicio WHERE ur.id_usuario={0}'.format(id))
         datosEjercicio= cur.fetchall()
         cur.execute('SELECT distinct(r.id_rutina), r.nombre FROM usuario_rutina ur JOIN rutina r ON r.id_rutina=ur.id_rutina JOIN rutina_ejercicio re ON r.id_rutina=re.id_rutina WHERE ur.id_usuario={0}'.format(id))
@@ -140,7 +145,7 @@ def home():
             datosRutinas.append(ejercicioRut)
         rutina= request.args.get('rutina')
         if rutina!=None:
-            cur= mysql.connection.cursor()
+            cur= mysql.cursor()
             cur.execute('SELECT e.id_ejercicio, e.nombre, re.peso, re.repeticiones, re.series, re.descanso FROM usuario_rutina ur JOIN rutina r ON r.id_rutina=ur.id_rutina JOIN rutina_ejercicio re ON r.id_rutina=re.id_rutina JOIN ejercicio e ON e.id_ejercicio=re.id_ejercicio WHERE ur.id_usuario={0} AND r.id_rutina={1}'.format(id, rutina))
             ejercicios= cur.fetchall()
             cur.execute('SELECT r.nombre FROM rutina r WHERE r.id_rutina={0}'.format(rutina))
@@ -156,7 +161,7 @@ def perfil():
     if request.method =='POST':
         return render_template('perfil.html')
     if 'username' in session and request.method=='GET':
-        cur= mysql.connection.cursor()
+        cur= mysql.cursor()
         cur.execute('SELECT usuario, nombre, apellido, mail, contra, sexo, fecha_nacimiento, altura, peso, cintura, cuello, caderas FROM usuario WHERE id_usuario={0}'.format(session['username']))
         usuario= cur.fetchall()
         usuario=usuario[0]
@@ -169,10 +174,10 @@ def perfil():
 @app.route('/home/administracion_rutinas')
 def adm_rutinas():
     if 'username' in session:
-        cur= mysql.connection.cursor()
+        cur= mysql.cursor()
         cur.execute('SELECT r.nombre FROM rutina r JOIN usuario_rutina ur ON r.id_rutina=ur.id_rutina JOIN usuario u ON u.id_usuario=ur.id_usuario WHERE u.usuario = "{0}"'.format(session['username']))
         rutinas= cur.fetchall()
-        cur= mysql.connection.cursor()
+        cur= mysql.cursor()
         return render_template('administracion_rutinas.html')
     else:
         return redirect(url_for('Index'))
@@ -182,27 +187,27 @@ def add_rutina():
     if request.method =='POST' and 'username' in session:
         
         rutina=request.form['nombre-rutina']
-        cur= mysql.connection.cursor()
+        cur= mysql.cursor()
         cur.execute('SELECT r.nombre FROM rutina r JOIN usuario_rutina ur ON r.id_rutina=ur.id_rutina JOIN usuario u ON u.id_usuario=ur.id_usuario WHERE r.nombre="{0}" and u.usuario = "{1}"'.format(rutina, session['username']))
         rutinaRepetida = cur.fetchall()
-        cur= mysql.connection.cursor()
+        cur= mysql.cursor()
         print(session['username'])
         cur.execute('SELECT id_usuario FROM usuario u WHERE id_usuario= "{0}"'.format(session['username']))
         idUsuario= cur.fetchall()
         print(idUsuario)
         if (len(rutinaRepetida)==0):
-            cur= mysql.connection.cursor()
+            cur= mysql.cursor()
             cur.execute('INSERT into rutina(fecha, nombre, estado) VALUES (CURDATE(), %s , "Creada")', [rutina])
-            mysql.connection.commit()
-            cur= mysql.connection.cursor()
+            mysql.commit()
+            cur= mysql.cursor()
             cur.execute('SELECT max(id_rutina) FROM rutina')
             idrutina=cur.fetchall()
             idrutina= idrutina[0]
             idrutina= idrutina[0]
             session['idrutina']= idrutina
             cur.execute('INSERT into usuario_rutina(id_usuario, id_rutina, fecha_rutina) VALUES (%s, %s , CURDATE())', [idUsuario[0][0], idrutina])
-            mysql.connection.commit()
-            cur= mysql.connection.cursor()
+            mysql.commit()
+            cur= mysql.cursor()
             cur.execute('SELECT * FROM ejercicio')
             datosEjer=cur.fetchall()
             return render_template('add_rutina.html', rutina=rutina , ejercicios=datosEjer)
@@ -211,18 +216,18 @@ def add_rutina():
             return redirect(url_for('adm_rutinas'))
     else:
         if 'idrutina' in session and 'username' in session:
-            cur= mysql.connection.cursor()
+            cur= mysql.cursor()
             cur.execute('SELECT nombre FROM rutina WHERE id_rutina= {0}'.format(session['idrutina'])) 
             nombrerutina= cur.fetchall()
             nombrerutina=nombrerutina[0]
             nombrerutina=nombrerutina[0]
-            cur= mysql.connection.cursor()
+            cur= mysql.cursor()
             cur.execute('SELECT max(id_rutina) FROM rutina')
             idrutina=cur.fetchall()
             idrutina= idrutina[0]
             idrutina= idrutina[0]
             session['idrutina']= idrutina
-            cur= mysql.connection.cursor()
+            cur= mysql.cursor()
             cur.execute('SELECT * FROM ejercicio')
             datosEjer=cur.fetchall()
             return render_template('add_rutina.html', rutina=nombrerutina , ejercicios=datosEjer)
@@ -243,34 +248,34 @@ def create_rutina():
             peso= request.form.getlist('peso')
             descansos= request.form.getlist('descansos')
             idrutina= session['idrutina']
-            cur= mysql.connection.cursor()
+            cur= mysql.cursor()
             cur.execute('SELECT fecha FROM rutina WHERE id_rutina= {0}'.format(idrutina)) 
             fecharutina= cur.fetchall()
             fecharutina=fecharutina[0]
             fecharutina=fecharutina[0]
             for i in range(cantEjerc):
-                cur= mysql.connection.cursor()
+                cur= mysql.cursor()
                 cur.execute('SELECT id_ejercicio FROM ejercicio WHERE nombre= %s' , [nombreEjer[i]]) 
                 idejercicio= cur.fetchall()
                 idejercicio=idejercicio[0]
                 idejercicio=idejercicio[0]
-                cur= mysql.connection.cursor()
+                cur= mysql.cursor()
                 cur.execute('INSERT into rutina_ejercicio(fecha_rutina, id_rutina, id_ejercicio, descanso, repeticiones, peso, series) VALUES( %s, %s, %s, %s, %s, %s, %s )',
                 (fecharutina, idrutina, idejercicio, descansos[i], repeticiones[i], peso[i], series[i]))
-                mysql.connection.commit()
+                mysql.commit()
             session.pop('idrutina')
             flash('Creada correctamente')
         else:
             idrutina= session['idrutina']
-            cur= mysql.connection.cursor()
+            cur= mysql.cursor()
             cur.execute('SELECT u.id_usuario FROM usuario u WHERE u.id_usuario= "{0}"'.format(session['username']))
             idUsuario= cur.fetchall()
             idUsuario= idUsuario[0]
             idUsuario= idUsuario[0]
             cur.execute('DELETE FROM usuario_rutina WHERE id_rutina = %s and id_usuario= %s' , [idrutina, idUsuario])
-            mysql.connection.commit()
+            mysql.commit()
             cur.execute('DELETE FROM rutina WHERE id_rutina = %s', [idrutina])
-            mysql.connection.commit()
+            mysql.commit()
             session.pop('idrutina')
             flash('No se agrego ningun ejercicio')
 
@@ -280,15 +285,15 @@ def create_rutina():
 @app.route('/home/administracion_rutinas/modify_rutina')
 def modify_rutina():
     if 'username' in session:
-        cur= mysql.connection.cursor()
+        cur= mysql.cursor()
         cur.execute('SELECT r.id_rutina, r.nombre FROM rutina r JOIN usuario_rutina ur ON r.id_rutina=ur.id_rutina WHERE ur.id_usuario= %s ', 
         [session['username']])
         rutinas=cur.fetchall()
-        cur= mysql.connection.cursor()
+        cur= mysql.cursor()
         cur.execute('SELECT r.id_rutina, e.id_ejercicio, e.nombre, re.series, re.repeticiones, re.peso, re.descanso FROM rutina r JOIN usuario_rutina ur ON r.id_rutina=ur.id_rutina JOIN rutina_ejercicio re ON r.id_rutina=re.id_rutina JOIN ejercicio e ON re.id_ejercicio=e.id_ejercicio WHERE ur.id_usuario= %s ', 
         [session['username']])
         rutinaEjercicios=cur.fetchall()
-        cur= mysql.connection.cursor()
+        cur= mysql.cursor()
         cur.execute('SELECT * FROM ejercicio')
         datosEjer=cur.fetchall()
         return render_template('modify_rutina.html', rutinas=rutinas , ejercicios=datosEjer, rutinaEjer=rutinaEjercicios)
@@ -307,10 +312,10 @@ def add_modification():
             repeticiones= request.form.getlist('repeticiones')
             peso= request.form.getlist('peso')
             descansos= request.form.getlist('descansos')
-            cur= mysql.connection.cursor()
+            cur= mysql.cursor()
             cur.execute('UPDATE rutina r SET fecha=CURDATE() WHERE r.id_rutina={0}'.format(idrutina))
             cur.execute('DELETE FROM rutina_ejercicio WHERE id_rutina={0}'.format(idrutina))
-            mysql.connection.commit()         
+            mysql.commit()         
             cur.execute('SELECT r.fecha FROM rutina r WHERE r.id_rutina={0}'.format(idrutina))
             fecharutina= cur.fetchall()
             print(fecharutina)
@@ -321,10 +326,10 @@ def add_modification():
                 idejercicio= cur.fetchall()
                 idejercicio=idejercicio[0]
                 idejercicio=idejercicio[0]
-                cur= mysql.connection.cursor()
+                cur= mysql.cursor()
                 cur.execute('INSERT into rutina_ejercicio(fecha_rutina, id_rutina, id_ejercicio, descanso, repeticiones, peso, series) VALUES( %s, %s, %s, %s, %s, %s, %s )',
                 (fecharutina, idrutina, idejercicio, descansos[i], repeticiones[i], peso[i], series[i]))
-                mysql.connection.commit()
+                mysql.commit()
             flash('Modificada correctamente')
         else:
             flash('Tiene que agregar algun ejercicio a la rutina')
@@ -334,15 +339,15 @@ def add_modification():
 @app.route('/home/administracion_rutinas/delete_rutina')
 def delete_rutina():
     if 'username' in session:
-        cur= mysql.connection.cursor()
+        cur= mysql.cursor()
         cur.execute('SELECT r.id_rutina, r.nombre FROM rutina r JOIN usuario_rutina ur ON r.id_rutina=ur.id_rutina WHERE ur.id_usuario= %s ', 
         [session['username']])
         rutinas=cur.fetchall()
-        cur= mysql.connection.cursor()
+        cur= mysql.cursor()
         cur.execute('SELECT r.id_rutina, e.id_ejercicio, e.nombre, re.series, re.repeticiones, re.peso, re.descanso FROM rutina r JOIN usuario_rutina ur ON r.id_rutina=ur.id_rutina JOIN rutina_ejercicio re ON r.id_rutina=re.id_rutina JOIN ejercicio e ON re.id_ejercicio=e.id_ejercicio WHERE ur.id_usuario= %s ', 
         [session['username']])
         rutinaEjercicios=cur.fetchall()
-        cur= mysql.connection.cursor()
+        cur= mysql.cursor()
         print(rutinaEjercicios)
         print(rutinas)
         print("ingreso al template")
@@ -357,11 +362,11 @@ def confirm_delete():
             cantEjerc= len(request.form.getlist('orden'))
             idrutina= request.form['numb-rut']
             usuario= session['username']
-            cur= mysql.connection.cursor()
+            cur= mysql.cursor()
             cur.execute('DELETE FROM rutina_ejercicio WHERE id_rutina = {0}'.format(idrutina))
             cur.execute('DELETE FROM usuario_rutina WHERE id_rutina ={0} and id_usuario={1}'.format(idrutina, usuario))
             cur.execute('DELETE FROM rutina WHERE id_rutina = {0}'.format(idrutina))
-            mysql.connection.commit()
+            mysql.commit()
             flash('eliminada correctamente')
         else:
             flash('No se hicieron cambios')
@@ -379,10 +384,10 @@ def ejercicios_add():
     if request.method == 'POST':
         nombre=request.form['nombre-ejercicio']
         descrip=request.form['descripcion']
-        cur= mysql.connection.cursor()
+        cur= mysql.cursor()
         cur.execute('INSERT INTO ejercicio(nombre, descripcion) VALUES (%s, %s)',
         (nombre, descrip))
-        mysql.connection.commit()
+        mysql.commit()
         flash('Se registro el ejercicio')
     return redirect(url_for('ejercicios'))
 
