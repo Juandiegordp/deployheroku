@@ -75,20 +75,20 @@ def Register():
                 (datos[0], datos[1], datos[2], datos[3], datos[4], datos[5], datos[6], datos[7], datos[8], datos[9], datos[10], datos[11]))
                 mysql.commit()
                 flash('Registrado correctamente')
-                return redirect(url_for('Index', success=True))
+                return redirect(url_for('index', success=True))
             else:
                 if (len(coincidenciasUsuario)!=0):
                     flash('El usuario ya esta registrado')
                 if (len(coincidenciasMail)!=0):
                     flash('El mail ya esta registrado')
-                return redirect(url_for('Register'))
+                return redirect(url_for('register'))
 
     return render_template('register.html', form=registerForm)
 
 @app.route('/register_add', methods = ['POST'])
 def register_add():
 
-    return redirect(url_for('Index'))
+    return redirect(url_for('index'))
 
 @app.route('/home', methods=['POST', 'GET'])
 def home():
