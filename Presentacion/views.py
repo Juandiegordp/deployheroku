@@ -15,10 +15,10 @@ def Index(mysql, request):
          if controller.usuarioIniciado():
                return redirect(url_for('home'))
          else:
-            return render_template('Index.html')
+            return render_template('index.html')
       else:          
-         return render_template('Index.html', success=success)
-   return render_template('Index.html')
+         return render_template('index.html', success=success)
+   return render_template('index.html')
           
 
 def home(mysql, request):
