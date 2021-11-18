@@ -45,3 +45,16 @@
   {% endif %}
   </dd>
 {% endmacro %}
+
+{% macro render_integerfield(field, placeholder) %}
+  {{ field.label }}
+  {{ field(**kwargs)|safe}}
+  {% if field.errors %}
+    <ul class=errors>
+    {% for error in field.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  </dd>
+{% endmacro %}

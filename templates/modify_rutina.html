@@ -3,6 +3,7 @@
 {%block head%}
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link href="{{ url_for('static', filename= 'css/scroll.css')}}" rel="stylesheet">
+
 {%endblock%}
 {%block body%}
 
@@ -19,17 +20,17 @@
     </div>
 
     <div class="row" style="margin-top: 20px;">
-      <div class="col-md-2">
-        <div id="list-example" class="list-group ">
+      <div class="col-md-3">
+        <div id="list-example" class="list-group" style="height: 400px;overflow-y: scroll;">
           {% for ej in ejercicios%}
-          <a id="id-ejer-scroll" class="list-group-item list-group-item-action" href="#{{ej.1}}" onclick="seleccionar({{ej.1}});">{{ej.1}}</a>
+          <a id="id-ejer-scroll" class="list-group-item list-group-item-action" href="#{{ej.1}}" onclick="seleccionar('{{ej.0}}');">{{ej.1}}</a>
           {% endfor %}
         </div>
       </div>
-      <div class="col-md-10">
-        <div data-spy="scroll" data-target="#list-example" data-offset="0" class="scrollspy" style="height: 200px;overflow-y: scroll;">
+      <div class="col-md-9">
+        <div data-spy="scroll" data-target="#list-example" data-offset="0" class="scrollspy" style="height: 400px;overflow-y: scroll;">
           {%for ej in ejercicios%}
-          <h4 id="{{ej.1}}">{{ej.1}}</h4>
+          <h4 id="{{ej.0}}">{{ej.1}}</h4>
           <p>{{ej.2}}</p>
           {% endfor %}
         </div>
@@ -98,7 +99,7 @@
   <script>
 
     function seleccionar(elemento){
-      document.getElementById("id-ejer").innerHTML = elemento.innerHTML;
+      document.getElementById("id-ejer").innerHTML = document.getElementById(elemento).innerHTML;
       document.getElementById("id-botonAdd").disabled=false;
     }
 
@@ -115,7 +116,7 @@
       var table = document.getElementById("id-tabla");
       var rowCount = table.rows.length;
       var ejercicioHTML=document.getElementById("id-ejer");
-      var fila= '<td class="orden" ><input type="hidden" name="orden" value="'+ rowCount +'">'+ rowCount +'</td><td><input type="hidden" name="nombre-ejer" value="' + ejercicioHTML.innerHTML +'">'+ ejercicioHTML.innerHTML +'</td><td><input type="text" onkeypress="return validaNumericos(event)" required name="series"></td><td><input type="text" onkeypress="return validaNumericos(event)" required name="repeticiones"></td><td><input type="text" onkeypress="return validaNumericos(event)" required name="peso"></td><td><input type="text" onkeypress="return validaNumericos(event)" required name="descansos"></td><td><input class="btn btn-danger" type="button" onclick="eliminarFilaPrueba('+ (contador) +');" value="Eliminar" /></td>'
+      var fila= '<td class="orden" ><input type="hidden" name="orden" value="'+ rowCount +'">'+ rowCount +'</td><td><input type="hidden" name="nombre-ejer" value="' + ejercicioHTML.innerHTML +'">'+ ejercicioHTML.innerHTML +'</td><td><input class="w-100 " type="text" onkeypress="return validaNumericos(event)" required name="series"></td><td class=""><input class="w-100 " type="text" onkeypress="return validaNumericos(event)" required name="repeticiones"></td><td><input class="w-100  " type="text" onkeypress="return validaNumericos(event)" required name="peso"></td><td><input class="w-100 " type="text" onkeypress="return validaNumericos(event)" required name="descansos"></td><td><input class="btn btn-outline-danger" type="button" onclick="eliminarFilaPrueba('+ (contador) +');" value="Eliminar" /></td>'
       
       var row= document.getElementById("id-body").insertRow(-1);
       row.id='fila' + contador;
@@ -155,13 +156,11 @@
       }
       rutinasEjer.forEach(ej => {
         if (ej[0]==rut){
-          console.log("ej[0] "+ ej[0] + "rut "+ rut)
-          console.log("rutinaEjer seleccionada " + ej);
           var table = document.getElementById("id-tabla");
           var rowCount = table.rows.length;
           var row= document.getElementById("id-body").insertRow(-1);
           row.id='fila' + contador;
-          var fila= '<td class="orden" ><input type="hidden" name="orden" value="'+ rowCount +'">'+ rowCount +'</td><td><input type="hidden" name="nombre-ejer" value="' +  ej[2] +'">'+ ej[2] +'</td><td><input value="'+ ej[3]+'" type="text" onkeypress="return validaNumericos(event)" required name="series"></td><td><input value="'+ ej[4]+'" type="text" onkeypress="return validaNumericos(event)" required name="repeticiones"></td><td><input value="'+ ej[5]+'" type="text" onkeypress="return validaNumericos(event)" required name="peso"></td><td><input value="'+ ej[6]+'" type="text" onkeypress="return validaNumericos(event)" required name="descansos"></td><td><input class="btn btn-outline-danger" type="button" onclick="eliminarFilaPrueba('+ (contador) +');" value="Eliminar" /></td>'
+          var fila= '<td class="orden" ><input type="hidden" name="orden" value="'+ rowCount +'">'+ rowCount +'</td><td><input type="hidden" name="nombre-ejer" value="' +  ej[2] +'">'+ ej[2] +'</td><td><input class="w-100 " value="'+ ej[5]+'" type="text" onkeypress="return validaNumericos(event)" required name="series"></td><td class=""><input class="w-100 " value="'+ ej[4]+'" type="text" onkeypress="return validaNumericos(event)" required name="repeticiones"></td><td><input class="w-100  " value="'+ ej[3]+'" type="text" onkeypress="return validaNumericos(event)" required name="peso"></td><td><input class="w-100  " value="'+ ej[6]+'" type="text" onkeypress="return validaNumericos(event)" required name="descansos"></td><td><input class="btn btn-outline-danger" type="button" onclick="eliminarFilaPrueba('+ (contador) +');" value="Eliminar" /></td>'
           row.innerHTML= fila; 
 
           } 

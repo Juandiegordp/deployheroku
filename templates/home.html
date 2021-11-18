@@ -8,10 +8,11 @@
     {%endblock%}
     {%block body%}
       <div>
+        {{success}}
         {% with messages = get_flashed_messages() %}
         {% if messages %}
           {% for message in messages%}
-            <div class="alert alert-success" role="alert">
+            <div class="alert alert-success text-center" role="alert">
               {{message}}
             </div>
           {% endfor %}
@@ -41,22 +42,22 @@
           {% if rutina!=None%}
               <form action="/home" method="POST">
                 <div id="id-titulo" class="text-center">
-                  <h2>Rutina: {{rutina}}</h2>
+                  <h2>Rutina: {{rutina}} - {{calorias}} Calorías</h2>
                   <input name="rutina" value="{{rutina}}" hidden>
                 </div>
                 {% for ej in ejercicios %}
                 <div id="id-form" class="form-group">
                   <div id="id-ejercicio" class="row justify-content-center">
                     <h4 >{{ej.1}}</h4>
-                    <input name="ejercicio" value="{{ej.0}}" hidden>
                   </div>
                   <div id="id-info" class="row justify-content-center">
-                    <p><strong>Peso: </strong>{{ej.2}} Kg. <strong>Repeticiones: </strong>{{ej.3}} <strong>Series: </strong>{{ej.4}} <strong>Descanso: </strong>{{ej.5}} Minutos</p>
+                    <p><strong>Peso: </strong>{{ej.2}} Kg. &nbsp;<strong>Repeticiones: </strong> {{ej.3}} &nbsp;<strong> Series: </strong>{{ej.4}} <strong> &nbsp;Descanso: </strong>{{ej.5}} Segundos</p>
                   </div>
                   <div class="row justify-content-center">
                     <div class="col-1 text-center">
                       <h5 >Series</h5>
                       {% for i in range(0, ej.4)%}
+                        <input name="ejercicio" value="{{ej.0}}" hidden>
                         <h4 style="margin-bottom: 22px;">{{i + 1}}</h4>
                       {% endfor %}
                     </div>

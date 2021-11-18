@@ -7,6 +7,21 @@
   {%endblock%}
 
   {%block body%}
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages%}
+        {%if success %}
+        <div class="alert alert-success" role="alert">
+        {{message}}
+        </div>
+        {% else %}
+        <div class="alert alert-danger" role="alert">
+            {{message}}
+        </div>
+        {% endif %}
+    {% endfor %}
+    {% endif %}
+    {% endwith %} 
     <div class="container">
       <div class="row align-items-center">
           <div class="col">
@@ -17,47 +32,48 @@
           </div>
       </div>
       <div class="container">
-          <div class="row">
-              <label strong>Usuario: </label> 
-              <label >{{usuario.0}}</label>
-          </div>
-          <div class="row">
-            <label>Mail: {{usuario.3}}</label>
-          </div>
-          <div class="row">
-            <label>Sexo: {{usuario.5}}</label>
-          </div>
-          <div class="row">
-            <label>Fecha de nacimiento: {{usuario.6}}</label>
-          </div>
-          <div class="row">
-            <label>Peso: {{usuario.8}}</label>
-          </div>
-          <div class="row">
-            <label>Cintura: {{usuario.9}}</label>
-          </div>
-          <div class="row">
-            <label>Cuello: {{usuario.10}}</label>
-          </div>
-          {% if usuario.5=="Femenino"%}
-            <div class="row">
-              <label>Caderas: {{usuario.11}}</label>
-            </div>
-          {% endif %}
-          
-          <div class="row">
-            <div>
-              <label class="sr-2">IMC: {{imc}}</label>
-              <label > {{evaluacion}}</label>
-            </div>
-            <div class="col">
-              <label class="sr-2">Porcentaje de grasa: {{pg}}%</label>
-            </div>
-          </div>
-          <div class="row">
 
+        <div class="row">
+            <label><strong>Usuario: </strong> {{usuario.0}}</label>
+        </div>
+        <div class="row">
+          <label><strong>Mail: </strong> {{usuario.3}}</label>
+        </div>
+        <div class="row">
+          <label><strong>Sexo: </strong> {{usuario.5}}</label>
+        </div>
+        <div class="row">
+          <label><strong>Fecha de nacimiento: </strong> {{usuario.6}}</label>
+        </div>
+        <div class="row">
+          <label><strong>Peso: </strong> {{usuario.8}}</label>
+        </div>
+        <div class="row">
+          <label><strong>Estatura: </strong> {{usuario.7}}</label>
+        </div>
+        <div class="row">
+          <label><strong>Cintura: </strong> {{usuario.9}}</label>
+        </div>
+        <div class="row">
+          <label><strong>Cuello: </strong> {{usuario.10}}</label>
+        </div>
+        {% if usuario.5=="Femenino"%}
+          <div class="row">
+            <label><strong> Caderas: </strong> {{usuario.11}}</label>
           </div>
-
+        {% endif %}
+        <div class="row">
+            <label name="imc" class="sr-2"><strong>IMC: </strong>{{imc}} {{evaluacion}}</label>
+        </div>
+        <div class="row">
+          <label name="porcentaje_grasa" class="sr-2"><strong>Porcentaje de grasa: </strong> {{pg}}%</label>
+        </div>
+        <div class="row">
+          <label name="m_basal" class="sr-2"><strong>Metabolismo basal: </strong>{{m_basal}} cal/dia</label>
+      </div>
+        <div class="row">
+          <a role="button" href="/home/user/actualize" class="btn btn-primary mt-2">Actualizar datos</a>
+        </div>
       </div>
     </div>
   

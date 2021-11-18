@@ -27,7 +27,7 @@ CREATE TABLE `ejercicio` (
   `nombre` varchar(30) DEFAULT NULL,
   `descripcion` varchar(60) DEFAULT NULL,
   PRIMARY KEY (`id_ejercicio`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,7 +36,7 @@ CREATE TABLE `ejercicio` (
 
 LOCK TABLES `ejercicio` WRITE;
 /*!40000 ALTER TABLE `ejercicio` DISABLE KEYS */;
-INSERT INTO `ejercicio` VALUES (1,'ejercicio1','ASDASDADSadasdfadsasd'),(2,'ejercicio2','ASasafsdasfafkjfdjslkqwqwe'),(3,'ejercicio3','asñkjñqwourjas'),(5,'Ejercicio4','asdfkadlsja');
+INSERT INTO `ejercicio` VALUES (1,'Sentadilla','Se puede realizar con barra o en maquina'),(2,'Sentadilla Bulgara','Se puede realizar una sola mancuerna o dos'),(3,'Gemelos piernas rectas','Se puede realizar en maquina, barras o mancuernas'),(5,'Press banca inclinado','Se puede realizar con maquinas, barras o mancuernas'),(6,'Cruce de polea alta','Se realiza en poleas'),(7,'Curl de biseps','Se realiza con mancuerna, barra o polea'),(8,'Extensiones de triseps','Se realiza en polea'),(9,'Extensiones de cuadriceps','Se realiza en maquina'),(10,'Curl de isquios','Se realiza en maquina'),(11,'Gemelos sentado','Se realiza en maquina'),(12,'Jalon al pecho','Se realiza en maquina'),(13,'Press de hombros','Se realiza con maquina, mancuernas o barra'),(14,'Peso muerto','Se realiza con barra'),(15,'Remo horizontal','Se realiza en maquina'),(16,'Remo al menton','Se realiza en poleas'),(17,'Vuelos laterales','Se realiza con mancuernas o polea');
 /*!40000 ALTER TABLE `ejercicio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -64,6 +64,37 @@ CREATE TABLE `entrenador` (
 LOCK TABLES `entrenador` WRITE;
 /*!40000 ALTER TABLE `entrenador` DISABLE KEYS */;
 /*!40000 ALTER TABLE `entrenador` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `historial_rutina`
+--
+
+DROP TABLE IF EXISTS `historial_rutina`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `historial_rutina` (
+  `id_historial` int(11) NOT NULL AUTO_INCREMENT,
+  `id_rutina` int(11) NOT NULL,
+  `id_ejerc` int(11) NOT NULL,
+  `fecha_realizacion` date DEFAULT NULL,
+  `peso` int(11) DEFAULT NULL,
+  `repeticiones` int(11) DEFAULT NULL,
+  `descanso` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_historial`,`id_rutina`),
+  KEY `gistorial_rutina_rutina_idx` (`id_rutina`),
+  CONSTRAINT `gistorial_rutina_rutina` FOREIGN KEY (`id_rutina`) REFERENCES `rutina` (`id_rutina`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `historial_rutina`
+--
+
+LOCK TABLES `historial_rutina` WRITE;
+/*!40000 ALTER TABLE `historial_rutina` DISABLE KEYS */;
+INSERT INTO `historial_rutina` VALUES (27,1,1,'2021-11-10',20,12,90),(28,1,1,'2021-11-10',20,12,90),(29,1,1,'2021-11-10',15,14,90),(30,1,2,'2021-11-10',10,15,90),(31,1,2,'2021-11-10',10,15,90),(32,1,3,'2021-11-10',20,10,90),(33,1,3,'2021-11-10',25,12,90),(34,1,3,'2021-11-10',30,13,90),(35,1,5,'2021-11-10',20,12,150),(36,1,5,'2021-11-10',20,12,120),(37,1,5,'2021-11-10',20,10,120),(38,1,6,'2021-11-10',10,15,90),(39,1,6,'2021-11-10',10,15,90),(40,1,7,'2021-11-10',8,12,90),(41,1,7,'2021-11-10',10,12,90),(42,1,7,'2021-11-10',12,12,90),(43,1,8,'2021-11-10',15,10,90),(44,1,8,'2021-11-10',15,10,90),(45,1,8,'2021-11-10',15,10,90);
+/*!40000 ALTER TABLE `historial_rutina` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -102,7 +133,7 @@ CREATE TABLE `rutina` (
   `nombre` varchar(45) DEFAULT NULL,
   `estado` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id_rutina`,`fecha`)
-) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -111,6 +142,7 @@ CREATE TABLE `rutina` (
 
 LOCK TABLES `rutina` WRITE;
 /*!40000 ALTER TABLE `rutina` DISABLE KEYS */;
+INSERT INTO `rutina` VALUES (1,'2021-11-09','Full Body Dia 1','Creada'),(2,'2021-11-10','Full body Dia 2','Creada');
 /*!40000 ALTER TABLE `rutina` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -143,6 +175,7 @@ CREATE TABLE `rutina_ejercicio` (
 
 LOCK TABLES `rutina_ejercicio` WRITE;
 /*!40000 ALTER TABLE `rutina_ejercicio` DISABLE KEYS */;
+INSERT INTO `rutina_ejercicio` VALUES ('2021-11-10',1,1,90,12,20,3),('2021-11-10',1,2,90,15,10,2),('2021-11-10',1,3,90,12,20,3),('2021-11-10',1,5,120,12,20,3),('2021-11-10',1,6,90,15,10,2),('2021-11-10',1,7,90,10,8,3),('2021-11-10',1,8,90,10,15,3),('2021-11-10',2,5,120,12,20,3),('2021-11-10',2,7,120,10,15,3),('2021-11-10',2,8,120,10,15,3),('2021-11-10',2,9,90,15,20,3),('2021-11-10',2,10,120,12,15,3),('2021-11-10',2,11,90,20,15,2),('2021-11-10',2,12,60,20,25,3),('2021-11-10',2,13,120,12,15,3);
 /*!40000 ALTER TABLE `rutina_ejercicio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -170,7 +203,7 @@ CREATE TABLE `usuario` (
   PRIMARY KEY (`id_usuario`),
   UNIQUE KEY `usuario_UNIQUE` (`usuario`),
   UNIQUE KEY `mail_UNIQUE` (`mail`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -179,7 +212,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (4,'Danwife','Daniel','Medina','danielmedina012@gmail.com','Alexander1','Masculino','1998-11-14',176,80,90,40,0);
+INSERT INTO `usuario` VALUES (14,'Danwife','Daniel','Medina','danielmedina012@gmail.com','Alexander1','Masculino','2021-11-04',178,80,80,60,75);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -193,7 +226,7 @@ DROP TABLE IF EXISTS `usuario_rutina`;
 CREATE TABLE `usuario_rutina` (
   `id_usuario` int(11) NOT NULL,
   `id_rutina` int(11) NOT NULL,
-  `fecha` date DEFAULT NULL,
+  `fecha_rutina` date DEFAULT NULL,
   PRIMARY KEY (`id_usuario`,`id_rutina`),
   KEY `usuario_rutina_rutina_fk_idx` (`id_rutina`),
   CONSTRAINT `usuario_rutina_rutina_fk` FOREIGN KEY (`id_rutina`) REFERENCES `rutina` (`id_rutina`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -207,6 +240,7 @@ CREATE TABLE `usuario_rutina` (
 
 LOCK TABLES `usuario_rutina` WRITE;
 /*!40000 ALTER TABLE `usuario_rutina` DISABLE KEYS */;
+INSERT INTO `usuario_rutina` VALUES (14,1,'2021-11-10'),(14,2,'2021-11-10');
 /*!40000 ALTER TABLE `usuario_rutina` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -219,4 +253,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-09 22:33:26
+-- Dump completed on 2021-11-10 17:07:28

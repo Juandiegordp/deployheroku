@@ -106,13 +106,11 @@
           }
           rutinasEjer.forEach(ej => {
             if (ej[0]==rut){
-              console.log("ej[0] "+ ej[0] + "rut "+ rut)
-              console.log("rutinaEjer seleccionada " + ej);
               var table = document.getElementById("id-tabla");
               var rowCount = table.rows.length;
               var row= document.getElementById("id-body").insertRow(-1);
               row.id='fila' + contador;
-              var fila= '<td class="orden" ><input type="hidden" name="orden" value="'+ rowCount +'">'+ rowCount +'</td><td><input type="hidden" name="nombre-ejer" value="' +  ej[2] +'">'+ ej[2] +'</td><td><input value="'+ ej[3]+'" type="hidden" onkeypress="return validaNumericos(event)" required name="series">'+ej[3]+'</td><td><input value="'+ ej[4]+'" type="hidden" onkeypress="return validaNumericos(event)" required name="repeticiones">'+ ej[4]+'</td><td><input value="'+ ej[5]+'" type="hidden" onkeypress="return validaNumericos(event)" required name="peso">'+ ej[5]+'</td><td><input value="'+ ej[6]+'" type="hidden" onkeypress="return validaNumericos(event)" required name="descansos">'+ ej[6]+'</td>'
+              var fila= '<td class="orden" ><input type="hidden" name="orden" value="'+ rowCount +'">'+ rowCount +'</td><td><input type="hidden" name="nombre-ejer" value="' +  ej[2] +'">'+ ej[2] +'</td><td><input value="'+ ej[5]+'" type="hidden" onkeypress="return validaNumericos(event)" required name="series">'+ej[5]+'</td><td><input value="'+ ej[4]+'" type="hidden" onkeypress="return validaNumericos(event)" required name="repeticiones">'+ ej[4]+'</td><td><input value="'+ ej[3]+'" type="hidden" onkeypress="return validaNumericos(event)" required name="peso">'+ ej[3]+'</td><td><input value="'+ ej[6]+'" type="hidden" onkeypress="return validaNumericos(event)" required name="descansos">'+ ej[6]+'</td>'
               row.innerHTML= fila; 
     
               } 

@@ -19,7 +19,7 @@
           </div>
         </div>
         <div class="col-md-8">
-          <div data-spy="scroll" data-target="#list-example" data-offset="0" class="scrollspy" style="height: 200px;overflow-y: scroll;">
+          <div data-spy="scroll" data-target="#list-example" data-offset="0" class="scrollspy" style="overflow-y: scroll;">
             {%for ej in ejercicios%}
             <h4 id="{{ej.1}}">{{ej.1}}</h4>
             <p>{{ej.2}}</p>
@@ -74,17 +74,18 @@
     }
     var contador=0;
     function agregarFila(){
-      contador= contador + 1;
+
       var table = document.getElementById("id-tabla");
       var rowCount = table.rows.length;
       var ejercicioHTML=document.getElementById("id-ejer");
-      var fila= '<td class="orden" ><input type="hidden" name="orden" value="'+ rowCount +'">'+ rowCount +'</td><td><input type="hidden" name="nombre-ejer" value="' + ejercicioHTML.innerHTML +'">'+ ejercicioHTML.innerHTML +'</td><td><input type="text" onkeypress="return validaNumericos(event)" required name="series"></td><td><input type="text" onkeypress="return validaNumericos(event)" required name="repeticiones"></td><td><input type="text" onkeypress="return validaNumericos(event)" required name="peso"></td><td><input type="text" onkeypress="return validaNumericos(event)" required name="descansos"></td><td><input class="btn btn-outline-danger" type="button" onclick="eliminarFilaPrueba('+ (contador) +');" value="Eliminar" /></td>'
+      var fila= '<td class="orden" ><input type="hidden" name="orden" value="'+ rowCount +'">'+ rowCount +'</td><td><input type="hidden" name="nombre-ejer" value="' + ejercicioHTML.innerHTML +'">'+ ejercicioHTML.innerHTML +'</td><td><input class="w-100 " type="text" onkeypress="return validaNumericos(event)" required name="series"></td><td class=""><input class="w-100 " type="text" onkeypress="return validaNumericos(event)" required name="repeticiones"></td><td><input class="w-100  " type="text" onkeypress="return validaNumericos(event)" required name="peso"></td><td><input class="w-100 " type="text" onkeypress="return validaNumericos(event)" required name="descansos"></td><td><input class="btn btn-danger" type="button" onclick="eliminarFilaPrueba('+ (contador) +');" value="Eliminar" /></td>'
       
       var row= document.getElementById("id-body").insertRow(-1);
       row.id='fila' + contador;
       row.innerHTML= fila;
-
+      contador= contador + 1;
     };
+
     function eliminarFilaPrueba(index){
       $("#fila" + index).remove();
       var body= document.getElementById("id-body");
