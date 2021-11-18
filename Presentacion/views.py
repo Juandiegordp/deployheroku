@@ -1,6 +1,7 @@
 from Negocio import controller
 import forms, functions
 from flask import Flask, render_template, request, redirect, url_for, flash
+import psycopg2
    
 def register(mysql, request):
    registerForm= forms.RegisterForm(request.form)

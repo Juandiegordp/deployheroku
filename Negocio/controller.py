@@ -6,6 +6,7 @@ from flask.wrappers import Request
 from Database import db
 import forms, functions
 from flask import session
+import psycopg2
 
 def registraUsuario(mysql, request, registerForm):
     datos=[]
