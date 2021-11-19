@@ -8,13 +8,13 @@ def registrarUsuario(datos, mysql):
     mysql.connection.commit()
 
 def coincidenciasMail(datos, mysql):
-    cur = mysql.connection.cursor()
+    cur = mysql.cursor()
     cur.execute('SELECT usuario,mail FROM usuario WHERE mail="{0}"'.format(datos[3]))
     coincidenciasMail= cur.fetchall()
     return coincidenciasMail
 
 def coincidenciasUsuario(datos, mysql):
-    cur = mysql.connection.cursor()
+    cur = mysql.cursor()
     cur.execute('SELECT usuario,mail FROM usuario WHERE usuario="{0}"'.format(datos[0]))
     coincidenciasUsuario= cur.fetchall()
     return coincidenciasUsuario
