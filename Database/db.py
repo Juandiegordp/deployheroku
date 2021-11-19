@@ -16,7 +16,7 @@ def coincidenciasMail(datos, mysql):
 
 def coincidenciasUsuario(datos, mysql):
     cur = mysql.cursor()
-    cur.execute('SELECT usuario,mail FROM usuario WHERE usuario="{0}"'.format(datos[0]))
+    cur.execute('SELECT usuario,mail FROM usuario WHERE usuario= %s', datos[0])
     coincidenciasUsuario= cur.fetchall()
     return coincidenciasUsuario
 
