@@ -140,12 +140,12 @@ def datos_usuario(mysql, id):
 
 def actualizar_perfil(mysql, id, altura, peso, cintura, cuello, cadera):
     cur= mysql.cursor()
-    cur.execute('UPDATE usuario u SET altura={0}, peso={1}, cintura={2}, cuello={3}, caderas={4} WHERE u.id_usuario={5}'.format(altura, peso, cintura, cuello, cadera, id))
+    cur.execute('UPDATE usuario u SET altura=%s, peso=%s, cintura=%s, cuello=%s, caderas=%s WHERE u.id_usuario=%s',(altura, peso, cintura, cuello, cadera, id,))
     mysql.commit()
 
 def registrar_historial(mysql, id, imc, m_basal, p_grasa):
     cur= mysql.cursor()
-    cur.execute('INSERT INTO historial_usuario(id_usuario, imc, metabolismo_basal, porcentaje_grasa, fecha_historial) VALUES ({0}, {1}, {2}, {3}, CURDATE())'.format(id, imc,m_basal, p_grasa))
+    cur.execute('INSERT INTO historial_usuario(id_usuario, imc, metabolismo_basal, porcentaje_grasa, fecha_historial) VALUES (%s, %s, %s, %s, %s)',(id, imc,m_basal, p_grasa, datetime.today().strftime('%Y-%m-%d'),))
     mysql.commit()
 
 def fecha(mysql, id):
