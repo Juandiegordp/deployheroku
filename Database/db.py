@@ -27,13 +27,13 @@ def estaRegistrado(mysql, usuario, contrasenia):
 
 def seleccionarIdRutina(mysql, rutina):
     cur= mysql.cursor()
-    cur.execute('SELECT id_rutina FROM rutina WHERE nombre="{0}"'.format(rutina))
+    cur.execute('SELECT id_rutina FROM rutina WHERE nombre=%s',(rutina,))
     idrutina=cur.fetchall()
     return idrutina
 
 def registrarHistorial(mysql, idrutina, ej, pesos, repeticiones, descansos):
     cur= mysql.cursor()
-    cur.execute('INSERT into historial_rutina(id_rutina, id_ejerc, fecha_realizacion, peso, repeticiones, descanso) VALUES (%s, %s , CURDATE(), %s, %s, %s)', [idrutina, ej, pesos, repeticiones, descansos])
+    cur.execute('INSERT into historial_rutina(id_rutina, id_ejerc, fecha_realizacion, peso, repeticiones, descanso) VALUES (%s, %s , %s, %s, %s, %s)', [idrutina, ej,datetime.today().strftime('%Y-%m-%d') , pesos, repeticiones, descansos])
     mysql.commit()
 
 def datosEjercicioRutina(mysql,id):
@@ -43,7 +43,7 @@ def datosEjercicioRutina(mysql,id):
 
 def rutinasUsuario(mysql,id):
     cur= mysql.cursor()
-    cur.execute('SELECT distinct(r.id_rutina), r.nombre FROM usuario_rutina ur JOIN rutina r ON r.id_rutina=ur.id_rutina WHERE ur.id_usuario={0}'.format(id))
+    cur.execute('SELECT distinct(r.id_rutina), r.nombre FROM usuario_rutina ur JOIN rutina r ON r.id_rutina=ur.id_rutina WHERE ur.id_usuario=%s',(id,))
     return cur.fetchall()
 
 def seleccionarNombreRutina(mysql, idrutina):
