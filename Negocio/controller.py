@@ -99,7 +99,7 @@ def datosUsuario(mysql, request):
 def agregarRutina(mysql, request):       
     rutina=request.form['nombre-rutina']
     cur= mysql.cursor()
-    cur.execute('SELECT r.nombre FROM rutina r JOIN usuario_rutina ur ON r.id_rutina=ur.id_rutina JOIN usuario u ON u.id_usuario=ur.id_usuario WHERE r.nombre=%(str)s and u.usuario = %(int)s',{'str':rutina, 'int':session['username']})
+    cur.execute('SELECT r.nombre FROM rutina r JOIN usuario_rutina ur ON r.id_rutina=ur.id_rutina JOIN usuario u ON u.id_usuario=ur.id_usuario WHERE r.nombre=%(str)s and u.usuario = %(str)s',{'str':rutina, 'str':session['username']})
     rutinaRepetida = db.rutinaRepetida(mysql, rutina, session['username'])
     if (len(rutinaRepetida)==0):
         db.registrarRutina(mysql, rutina)
