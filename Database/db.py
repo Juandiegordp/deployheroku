@@ -87,7 +87,7 @@ def datosEjercicios(mysql):
 
 def registrarRutinaUsuario(mysql, idusuario, idrutina):
     cur= mysql.cursor()
-    cur.execute('INSERT into usuario_rutina(id_usuario, id_rutina, fecha_rutina) VALUES (%s, %s , CURDATE())', [idusuario, idrutina])
+    cur.execute('INSERT into usuario_rutina(id_usuario, id_rutina, fecha_rutina) VALUES (%s, %s , %s)', [idusuario, idrutina, datetime.now(),])
     mysql.commit()
 
 def seleccionFechaRutina(mysql, idrutina):
