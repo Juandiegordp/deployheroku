@@ -66,7 +66,7 @@ def seleccionarUsuario(mysql, id):
     return usuario[0]
 def rutinaRepetida(mysql, rutina,idusuario):
     cur= mysql.cursor()
-    cur.execute('SELECT r.nombre FROM rutina r JOIN usuario_rutina ur ON r.id_rutina=ur.id_rutina JOIN usuario u ON u.id_usuario=ur.id_usuario WHERE r.nombre=%s and u.usuario = %s',(rutina, idusuario,))
+    cur.execute('SELECT r.nombre FROM rutina r JOIN usuario_rutina ur ON r.id_rutina=ur.id_rutina JOIN usuario u ON u.id_usuario=ur.id_usuario WHERE r.nombre=%s and u.id_usuario = %s',(rutina, idusuario,))
     return cur.fetchall()
 
 def registrarRutina(mysql, rutina):
