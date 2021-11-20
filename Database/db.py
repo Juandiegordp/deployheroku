@@ -3,8 +3,7 @@ from flask_mysqldb import MySQL
 
 def registrarUsuario(datos, mysql):
     cur = mysql.cursor()
-    cur.execute('INSERT INTO usuario (usuario, nombre, apellido, mail, contra, sexo, fecha_nacimiento, altura, peso, cintura, cuello, caderas) VALUES ("{0}", "{1}", "{2}", "{3}", "{4}", "{5}", "{6}", {7}, {8}, {9}, {10}, {11})'.format
-    (datos[0], datos[1], datos[2], datos[3], datos[4], datos[5], datos[6], datos[7], datos[8], datos[9], datos[10], datos[11]))
+    cur.execute('INSERT INTO usuario (usuario, nombre, apellido, mail, contra, sexo, fecha_nacimiento, altura, peso, cintura, cuello, caderas) VALUES (datos[0], datos[1], datos[2], datos[3], datos[4], datos[5], datos[6], datos[7], datos[8], datos[9], datos[10], datos[11])')
     mysql.commit()
 
 def coincidenciasMail(datos, mysql):
