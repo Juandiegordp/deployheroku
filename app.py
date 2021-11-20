@@ -19,8 +19,11 @@ app = Flask(__name__)
 #app.config['MYSQL_DB'] = 'aplicaciongym'
 #mysql=MySQL(app)
 
-#Conexion postgresql
-mysql = psycopg2.connect(host="ec2-52-71-241-37.compute-1.amazonaws.com", database="dcj0rf3mfc52f1", port = 5432, user="hgycaxxgbohnkw", password="e1d06c93e07b70efbe6dd02f933c7702c2c0dbd38b095f61aebbce89cbd7011e")
+#Conexion postgresql 
+#Raklion
+#mysql = psycopg2.connect(host="ec2-52-71-241-37.compute-1.amazonaws.com", database="dcj0rf3mfc52f1", port = 5432, user="hgycaxxgbohnkw", password="e1d06c93e07b70efbe6dd02f933c7702c2c0dbd38b095f61aebbce89cbd7011e")
+#mi email
+mysql = psycopg2.connect(host="ec2-18-233-177-20.compute-1.amazonaws.com", database="d2rt6mgms0f1ju", port = 5432, user="fgcbqbgwarptmx", password="eb4d80bfd00459beaf5e04eb392e7bb2b497a57e8493986e08973fc577ae5c3f")
 
 # settings session
 
