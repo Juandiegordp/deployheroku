@@ -61,7 +61,7 @@ def seleccionarEjerciciosRutina(mysql, idusuario, idrutina):
 
 def seleccionarUsuario(mysql, id):
     cur= mysql.cursor()
-    cur.execute('SELECT usuario, nombre, apellido, mail, contra, sexo, fecha_nacimiento, altura, peso, cintura, cuello, caderas FROM usuario WHERE id_usuario={0}'.format(id))
+    cur.execute('SELECT usuario, nombre, apellido, mail, contra, sexo, fecha_nacimiento, altura, peso, cintura, cuello, caderas FROM usuario WHERE id_usuario=%s',(id,))
     usuario= cur.fetchall()
     return usuario[0]
 def rutinaRepetida(mysql, rutina,idusuario):
