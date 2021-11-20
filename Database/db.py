@@ -110,7 +110,7 @@ def registrarRutinaEjercicio(mysql, fecharutina, idrutina, idejercicio, descanso
 
 def modificarRutina(mysql, idrutina):
     cur= mysql.cursor()
-    cur.execute('UPDATE rutina r SET fecha=CURDATE() WHERE r.id_rutina=%(int)s',{'int':idrutina})
+    cur.execute('UPDATE rutina r SET fecha=%(date)s WHERE r.id_rutina=%(int)s',{'date': datetime.now(),'int':idrutina})
     cur.execute('DELETE FROM rutina_ejercicio WHERE id_rutina=%s',(idrutina,))
     mysql.commit()  
 
