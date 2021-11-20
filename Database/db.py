@@ -116,9 +116,9 @@ def modificarRutina(mysql, idrutina):
 
 def eliminarRutina(mysql, usuario, idrutina):
     cur= mysql.cursor()
-    cur.execute('DELETE FROM rutina_ejercicio WHERE id_rutina = {0}'.format(idrutina))
-    cur.execute('DELETE FROM usuario_rutina WHERE id_rutina ={0} and id_usuario={1}'.format(idrutina, usuario))
-    cur.execute('DELETE FROM rutina WHERE id_rutina = {0}'.format(idrutina))
+    cur.execute('DELETE FROM rutina_ejercicio WHERE id_rutina = %(int)s',{'int':id})
+    cur.execute('DELETE FROM usuario_rutina WHERE id_rutina =%(int)s and id_usuario=%(int)s',{'int':idrutina, 'int':usuario})
+    cur.execute('DELETE FROM rutina WHERE id_rutina = %(int)s',{'int':idrutina})
     mysql.commit()
 
 def registrarEjercicio(mysql, nombre, descrip):
