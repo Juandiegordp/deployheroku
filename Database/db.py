@@ -71,7 +71,7 @@ def rutinaRepetida(mysql, rutina,idusuario):
 
 def registrarRutina(mysql, rutina):
     cur= mysql.cursor()
-    cur.execute('INSERT into rutina(fecha, nombre, estado) VALUES (%s, %s , %s)', (datetime.now(), rutina, 'Creada'))
+    cur.execute('INSERT into rutina(fecha, nombre, estado) VALUES (%s, %s , %s)', (datetime.today().strftime('%Y-%m-%d'), rutina, 'Creada'))
     mysql.commit()
 
 def ultimaRutina(mysql):
@@ -87,7 +87,7 @@ def datosEjercicios(mysql):
 
 def registrarRutinaUsuario(mysql, idusuario, idrutina):
     cur= mysql.cursor()
-    cur.execute('INSERT into usuario_rutina(id_usuario, id_rutina, fecha_rutina) VALUES (%s, %s , %s)', [idusuario, idrutina, datetime.now(),])
+    cur.execute('INSERT into usuario_rutina(id_usuario, id_rutina, fecha_rutina) VALUES (%s, %s , %s)', [idusuario, idrutina, datetime.today().strftime('%Y-%m-%d'),])
     mysql.commit()
 
 def seleccionFechaRutina(mysql, idrutina):
@@ -110,7 +110,7 @@ def registrarRutinaEjercicio(mysql, fecharutina, idrutina, idejercicio, descanso
 
 def modificarRutina(mysql, idrutina):
     cur= mysql.cursor()
-    cur.execute('UPDATE rutina r SET fecha=%(date)s WHERE r.id_rutina=%(int)s',{'date': datetime.now(),'int':idrutina})
+    cur.execute('UPDATE rutina r SET fecha=%(date)s WHERE r.id_rutina=%(int)s',{'date': datetime.today().strftime('%Y-%m-%d'),'int':idrutina})
     cur.execute('DELETE FROM rutina_ejercicio WHERE id_rutina=%s',(idrutina,))
     mysql.commit()  
 
@@ -134,7 +134,7 @@ def historialEjerciciosRutina(mysql, idusuario, idrutina):
 
 def datos_usuario(mysql, id):
     cur= mysql.cursor()
-    cur.execute('SELECT sexo, altura, peso, cintura, cuello, caderas FROM usuario WHERE id_usuario={0}'.format(id))
+    cur.execute('SELECT sexo, altura, peso, cintura, cuello, caderas FROM usuario WHERE id_usuario=%s',(id,))
     datos= cur.fetchall()
     return datos
 
