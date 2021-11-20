@@ -48,7 +48,7 @@ def rutinasUsuario(mysql,id):
 
 def seleccionarNombreRutina(mysql, idrutina):
     cur= mysql.cursor()
-    cur.execute('SELECT r.nombre FROM rutina r WHERE r.id_rutina={0}'.format(idrutina))
+    cur.execute('SELECT r.nombre FROM rutina r WHERE r.id_rutina=%s',(idrutina,))
     nombreRutina= cur.fetchall()
     nombreRutina=nombreRutina[0][0]
     return nombreRutina
@@ -163,6 +163,6 @@ def sexo(mysql, id):
 
 def historial_usuario(mysql, id):
     cur= mysql.cursor()
-    cur.execute('SELECT imc, metabolismo_basal, porcentaje_grasa, fecha_historial FROM historial_usuario WHERE id_usuario={0} ORDER BY(id_historial_usuario)'.format(id))
+    cur.execute('SELECT imc, metabolismo_basal, porcentaje_grasa, fecha_historial FROM historial_usuario WHERE id_usuario=%s ORDER BY(id_historial_usuario)',(id,))
     historial= cur.fetchall()
     return historial
