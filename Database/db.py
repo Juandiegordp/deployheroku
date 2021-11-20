@@ -21,7 +21,7 @@ def coincidenciasUsuario(datos, mysql):
 
 def estaRegistrado(mysql, usuario, contrasenia):
     cur= mysql.cursor()
-    cur.execute('SELECT u.id_usuario FROM usuario u WHERE (u.usuario= %s or u.mail=%s) AND u.contra=%s', (usuario, usuario, contrasenia))
+    cur.execute('SELECT u.id_usuario FROM usuario u WHERE (u.usuario= %s or u.mail=%s) AND u.contra=%s', (usuario, usuario, contrasenia,))
     datosUsuario= cur.fetchall()
     return datosUsuario
 
