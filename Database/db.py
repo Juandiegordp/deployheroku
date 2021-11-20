@@ -150,14 +150,14 @@ def registrar_historial(mysql, id, imc, m_basal, p_grasa):
 
 def fecha(mysql, id):
     cur= mysql.cursor()
-    cur.execute('SELECT fecha_nacimiento FROM usuario WHERE id_usuario={0}'.format(id))
+    cur.execute('SELECT fecha_nacimiento FROM usuario WHERE id_usuario=%s',(id,))
     fecha= cur.fetchall()
     return fecha[0][0]
 
 
 def sexo(mysql, id):
     cur= mysql.cursor()
-    cur.execute('SELECT sexo FROM usuario WHERE id_usuario={0}'.format(id))
+    cur.execute('SELECT sexo FROM usuario WHERE id_usuario=%s',(id,))
     sexo= cur.fetchall()
     return sexo[0]
 
