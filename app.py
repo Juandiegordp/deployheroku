@@ -46,7 +46,7 @@ def Register():
 def home():
     return views.home(mysql, request)
 
-@app.route('/home/user', methods=['GET']) 
+@app.route('https://gymappsoporte.herokuapp.com/home/user', methods=['GET']) 
 def perfil():
     return views.perfil(mysql, request)
 
