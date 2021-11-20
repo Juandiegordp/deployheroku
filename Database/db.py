@@ -1,4 +1,5 @@
 from flask_mysqldb import MySQL
+from datetime import datetime
 ###from MySQLdb import cursors
 
 def registrarUsuario(datos, mysql):
@@ -70,7 +71,7 @@ def rutinaRepetida(mysql, rutina,idusuario):
 
 def registrarRutina(mysql, rutina):
     cur= mysql.cursor()
-    cur.execute('INSERT into rutina(fecha, nombre, estado) VALUES (CURDATE(), %s , "Creada")', [rutina])
+    cur.execute('INSERT into rutina(fecha, nombre, estado) VALUES (%s, %s , %s)', (datetime.now(), rutina, "Creada",))
     mysql.commit()
 
 def ultimaRutina(mysql):
