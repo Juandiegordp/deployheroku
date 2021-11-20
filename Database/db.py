@@ -71,7 +71,7 @@ def rutinaRepetida(mysql, rutina,idusuario):
 
 def registrarRutina(mysql, rutina):
     cur= mysql.cursor()
-    cur.execute('INSERT into rutina(fecha, nombre, estado) VALUES (%s, %s , %s)', (datetime.today().strftime('%Y-%m-%d'), rutina, 'Creada'))
+    cur.execute('INSERT into rutina(fecha, nombre, estado) VALUES (%s, %s , %s)', (datetime.today().strftime('%Y-%m-%d'), rutina, "Creada",))
     mysql.commit()
 
 def ultimaRutina(mysql):
