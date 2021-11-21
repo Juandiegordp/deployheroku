@@ -128,7 +128,7 @@ def registrarEjercicio(mysql, nombre, descrip):
 
 def historialEjerciciosRutina(mysql, idusuario, idrutina):
     cur= mysql.cursor()
-    cur.execute('SELECT hr.fecha_realizacion, e.id_ejercicio, e.nombre, re.peso, re.repeticiones, re.series, re.descanso FROM  historial_rutina hr  JOIN rutina r ON hr.id_rutina=r.id_rutina JOIN rutina_ejercicio re ON hr.id_rutina=re.id_rutina and hr.id_ejerc=re.id_ejercicio JOIN ejercicio e ON e.id_ejercicio=re.id_ejercicio WHERE hr.id_rutina={0} ORDER BY(hr.id_historial)'.format(idrutina))
+    cur.execute('SELECT hr.fecha_realizacion, e.id_ejercicio, e.nombre, hr.peso, hr.repeticiones, hr.descanso FROM  historial_rutina hr  JOIN rutina r ON hr.id_rutina=r.id_rutina JOIN rutina_ejercicio re ON hr.id_rutina=re.id_rutina and hr.id_ejerc=re.id_ejercicio JOIN ejercicio e ON e.id_ejercicio=re.id_ejercicio WHERE hr.id_rutina={0} ORDER BY(hr.id_historial)'.format(idrutina))
     ejercicios= cur.fetchall()
     return ejercicios
 
