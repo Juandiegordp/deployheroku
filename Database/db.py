@@ -28,7 +28,7 @@ def estaRegistrado(mysql, usuario, contrasenia):
 def seleccionarIdRutina(mysql, rutina):
     cur= mysql.cursor()
     cur.execute('SELECT id_rutina FROM rutina WHERE nombre=%s',(rutina,))
-    idrutina=cur.fetchall()
+    idrutina=cur.fetchone()
     return idrutina
 
 def registrarHistorial(mysql, idrutina, ej, pesos, repeticiones, descansos):
