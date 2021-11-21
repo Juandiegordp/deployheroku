@@ -33,7 +33,7 @@ def seleccionarIdRutina(mysql, rutina):
 
 def registrarHistorial(mysql, idrutina, ej, pesos, repeticiones, descansos):
     cur= mysql.cursor()
-    cur.execute('INSERT into historial_rutina(id_rutina, id_ejerc, fecha_realizacion, peso, repeticiones, descanso) VALUES (%s, %s , %s, %s, %s, %s)', (idrutina, ej, datetime.today().strftime('%Y-%m-%d'),pesos, repeticiones, descansos,))
+    cur.execute('INSERT into historial_rutina(id_rutina, id_ejerc, fecha_realizacion, peso, repeticiones, descanso) VALUES (%(int)s, %(int)s , %(date)s, %(int)s, %(int)s, %(int)s)', {'int':idrutina, 'int':ej, 'date': datetime.today().strftime('%Y-%m-%d') , 'int':pesos, 'int':repeticiones, 'int':descansos})
     mysql.commit()
 
 def datosEjercicioRutina(mysql,id):
