@@ -65,7 +65,7 @@ def iniciarSesion(mysql, request):
             flash("Alguno de los datos es incorrecto")
             return redirect(url_for('Index', success=False))
     if request.form['boton']=="Terminar Rutina":
-        rutina=request.form.get['rutina']
+        rutina=request.form['rutina']
         ejercicio=request.form.getlist['ejercicio']
         pesos=request.form.getlist['pesos']
         repeticiones=request.form.getlist['repeticiones']
