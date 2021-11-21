@@ -29,8 +29,8 @@ def registraUsuario(mysql, request, registerForm):
         flash('Complete todos los datos')
         return redirect(url_for('Register'))
     else:
-        coincidenciasUsuario= db.coincidenciasMail(datos, mysql)
-        coincidenciasMail= db.coincidenciasUsuario(datos, mysql)
+        coincidenciasUsuario= db.coincidenciasUsuario(datos, mysql)
+        coincidenciasMail= db.coincidenciasMail(datos, mysql)
         if (len(coincidenciasMail)==0 and len(coincidenciasUsuario)==0):
             db.registrarUsuario(datos, mysql)
             flash('Registrado correctamente')
