@@ -14,7 +14,7 @@
         <div class="col-md-4">
           <div id="list-example" class="list-group ">
             {% for ej in ejercicios%}
-            <a id="id-ejer-scroll" class="list-group-item list-group-item-action" href="#{{ej.1}}" onclick="seleccionar({{ej.1}});">{{ej.1}}</a>
+            <a id="id-ejer-scroll" class="list-group-item list-group-item-action" href="#{{ej.1}}" onclick="seleccionar({{ej.0}});">{{ej.1}}</a>
             {% endfor %}
           </div>
         </div>
@@ -62,7 +62,7 @@
   <script>
 
     function seleccionar(elemento){
-      document.getElementById("id-ejer").innerHTML = elemento.innerHTML;
+      document.getElementById("id-ejer").innerHTML = document.getElementById(elemento).innerHTML;
       document.getElementById("id-botonAdd").disabled=false;
     }
 
