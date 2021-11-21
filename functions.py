@@ -53,4 +53,4 @@ def calcular_calorias(ejercicio):
     for ej in ejercicio:
         cant_series_totales=cant_series_totales + ej[4]
         calorias_ejercicio= calorias_ejercicio + ej[4]*ej[5]
-    return round((calorias_ejercicio) + (cant_series_totales*45)*0.1)
+    return round(((calorias_ejercicio) + (cant_series_totales*45))*0.1)
