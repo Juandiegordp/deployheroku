@@ -66,10 +66,10 @@ def iniciarSesion(mysql, request):
             return redirect(url_for('Index', success=False))
     if request.form['boton']=="Terminar Rutina":
         rutina=request.form['rutina']
-        ejercicio=request.form.getlist['ejercicio']
-        pesos=request.form.getlist['pesos']
-        repeticiones=request.form.getlist['repeticiones']
-        descansos=request.form.getlist['descansos']
+        ejercicio=request.form.getlist('ejercicio')
+        pesos=request.form.getlist('pesos')
+        repeticiones=request.form.getlist('repeticiones')
+        descansos=request.form.getlist('descansos')
         idrutina=db.seleccionarIdRutina(mysql, rutina)
         print(idrutina)
         for j in range(0, len(pesos)):
