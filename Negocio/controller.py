@@ -73,7 +73,7 @@ def iniciarSesion(mysql, request):
         idrutina=db.seleccionarIdRutina(mysql, rutina)
         print(idrutina)
         for j in range(0, len(pesos)):
-            db.registrarHistorial(mysql, 3, ejercicio[j], pesos[j], repeticiones[j], descansos[j])    
+            db.registrarHistorial(mysql, idrutina, ejercicio[j], pesos[j], repeticiones[j], descansos[j])    
         flash("Termino la rutina")
         return redirect(url_for('home'))
 
